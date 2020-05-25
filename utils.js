@@ -4,19 +4,19 @@
 let domActionBuffer = [];
 let flushTimeout;
 
-window.display = function () {
+window.display = function() {
   if (!flushTimeout) flushTimeout = setTimeout(flushDomQueue, 100);
 
   domActionBuffer.push({ action: 'display', arguments: arguments });
 };
 
-window.displayRegexArray = function () {
+window.displayRegexArray = function() {
   if (!flushTimeout) flushTimeout = setTimeout(flushDomQueue, 100);
 
   domActionBuffer.push({ action: 'displayRegexArray', arguments: arguments });
 };
 
-window.clearDisplay = function () {
+window.clearDisplay = function() {
   if (!flushTimeout) flushTimeout = setTimeout(flushDomQueue, 100);
 
   domActionBuffer.push({ action: 'clearDisplay' });
@@ -75,17 +75,16 @@ function displayValue(value, addMargin, addPadding) {
 function displayObject(object, regexArray) {
   if (object == null) return displayValue('null');
   if (getTypeName(object) === 'Array' && !regexArray) {
-    let appendedArrayValues = object.reduce((acc, cur) => acc+=cur+',', '')
+    let appendedArrayValues = object.reduce((acc, cur) => acc += cur + ',', '')
     if (appendedArrayValues.length > 0)
       appendedArrayValues = appendedArrayValues.substr(0, appendedArrayValues.length - 1)
-    displayValue('[' + appendedArrayValues  + ']')
+    displayValue('[' + appendedArrayValues + ']')
     if (Object.keys(object).length > object.length) {
       displayValue('&nbsp;')
       displayValue('Additional array properties:')
     }
-    for (let propertyName in object)
-    {
-      if (!Number.isInteger(+propertyName) && object[propertyName] !== undefined) 
+    for (let propertyName in object) {
+      if (!Number.isInteger(+propertyName) && object[propertyName] !== undefined)
         displayValue('&nbsp;&nbsp;' + propertyName + ": " + object[propertyName])
       else if (typeof object[propertyName] === 'object', false) {
         return displayObject()
@@ -96,7 +95,7 @@ function displayObject(object, regexArray) {
 
   displayValue(getTypeName(object) + ' {');
   for (var propertyName in object) {
-    if (typeof object[propertyName] === 'object', false) 
+    if (typeof object[propertyName] === 'object', false)
       displayObject(object[propertyName])
     else if (propertyName != 'constructor' && (!regexArray || object[propertyName] !== undefined)) {
       let prefix = Number.isInteger(+propertyName) && regexArray ? '[' : ''
@@ -126,4 +125,4 @@ let reloadJS = () => {
   body.appendChild(newScriptTag);
 };
 
-setInterval(reloadJS, 1000);
+setInterval(reloadJS, 3000);
