@@ -1,22 +1,45 @@
 'use strict';
 (function() {
-  // this way of crating object is called  "creating object via object literal" or simply "object literal"
-  let person1 = {
-    firstName: 'Jim',
-    lastName: 'Cooper',
-    isAdult: function() { return this.age > 18; }
-  };
 
-  // anther way to cretae object - creating object via Object.create() and prototype
-  let person2 = Object.create(
-    Object.prototype, {
-    firstName: { value: 'Jim', enumerable: true, writable: true, configurable: true },
-    lastName: { value: 'Cooper', enumerable: true, writable: true, configurable: true },
-    age: { value: 29, enumerable: true, writable: true, configurable: true },
+  // let date = new Date(1000);
+  // display(date.toString());
+
+  // display(date.getUTCHours());
+
+  let date1 = new Date(2020, 3, 25, 12, 1, 30, 50);
+  let date2 = new Date(2020, 3, 25, 12, 1, 30, 55);
+
+  // display(date1.toString());
+  // display(date2 - date1); // 5
+
+  function checkPasswordComplexity(password) {
+    // let regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$', 'gi');
+    let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/gi
+    return regex.test(password);
   }
-  );
 
-  display(person1);
-  display(person2);
-  // outputs the same resutls
+  // display(checkPasswordComplexity('Stronger1'));
+
+  function findAlerts(logData) {
+    let regex = /ERROR(.*?):(.*?);/g;
+
+    let result = regex.exec(logData);
+    while (result !== null) {
+      display(result[1]);
+      display(result[2]);
+      display('-------------------------------');
+      result = regex.exec(logData);
+    }
+
+    // displayRegexArray(regex.exec(logData));
+    // displayRegexArray(regex.exec(logData));
+  }
+
+  let logData = 'INFO:Ok;ERROR(HIGH):Something broke;ERROR(LOW):Something fishy;';
+  let result = findAlerts(logData);
+
+  //  display(result[0]);
+  //  display(result.index);
+  //  display(result.input);
+
 })();

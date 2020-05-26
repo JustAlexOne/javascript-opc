@@ -15,4 +15,9 @@
     display(propertyName);
   }
 
+  // iterate over name and value
+  for (let propertyName in person) {
+      display(propertyName + ': ' + person[propertyName]);
+  }
+
 })();
